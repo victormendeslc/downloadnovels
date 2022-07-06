@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Download novel</title>
+
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.1.3/css/bootstrap.min.css} "/>
+
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">Download novel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="#" th:href="@{/exportHtml}">Export Html <span
+                            class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <form th:action="@{/exportHtml}" th:object="${novelForm}" method="post">
+                <div class="mb-4">
+                    <label>Choice novel</label>
+                    <select class="form-select" aria-label="Default select example" name="novelName">
+                        <option selected>Open this select menu</option>
+                        <span th:each="novel:${novels}">
+                         <option th:text="${novel.novelName}"  th:value="${novel.novelName}" ></option>
+                        </span>
+                    </select>
+                </div>
+                <div class="md-12">
+                    <button type="submit" class="btn btn-primary" value="exportHtml">Export to Html</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
