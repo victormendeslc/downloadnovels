@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum TypeSite {
     LIGHTNOVEL("LightNovel"),
     WUXIAWORLD("Wuxiaworld"),
-    NOVELHALL("NovelHall");
+    NOVELHALL("NovelHall"),
+    REAPERSCANS("Reaperscans");
 
     private final String title;
 

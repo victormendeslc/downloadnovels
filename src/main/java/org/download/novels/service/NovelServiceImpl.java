@@ -6,6 +6,7 @@ import org.download.novels.model.Novel;
 import org.download.novels.repository.NovelRepository;
 import org.download.novels.service.lightnovel.LightNovel;
 import org.download.novels.service.novehall.NovelHall;
+import org.download.novels.service.reaperscans.Reaperscans;
 import org.download.novels.service.wuxiaworld.Wuxiaworld;
 import org.springframework.stereotype.Service;
 
@@ -17,29 +18,31 @@ import static j2html.TagCreator.*;
 public record NovelServiceImpl(NovelRepository repository,
                                Wuxiaworld wuxiaworld,
                                LightNovel lightNovel,
-                               NovelHall novelHall) implements NovelService {
+                               NovelHall novelHall,
+                               Reaperscans reaperscans) implements NovelService {
 
     @Override
     public void create(TypeSite type, String file, String page) {
-            try {
-                Novel novel = repository.findByNovelName(file).orElseGet(() -> {
-                    Novel entity = new Novel();
-                    entity.setNovelName(file);
-                    entity.setPage(page);
-                    entity.setType(type);
-                    repository.save(entity);
-                    repository.flush();
-                    return entity;
-                });
+        try {
+            Novel novel = repository.findByNovelName(file).orElseGet(() -> {
+                Novel entity = new Novel();
+                entity.setNovelName(file);
+                entity.setPage(page);
+                entity.setType(type);
+                repository.save(entity);
+                repository.flush();
+                return entity;
+            });
 
-                switch (type) {
-                    case WUXIAWORLD -> wuxiaworld.execute(novel, file, page);
-                    case LIGHTNOVEL -> lightNovel.execute(novel, file, page);
-                    case NOVELHALL -> novelHall.execute(novel, file, page);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            switch (type) {
+                case WUXIAWORLD -> wuxiaworld.execute(novel, file, page);
+                case LIGHTNOVEL -> lightNovel.execute(novel, file, page);
+                case NOVELHALL -> novelHall.execute(novel, file, page);
+                case REAPERSCANS -> reaperscans.execute(novel, file, page,true);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
