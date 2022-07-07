@@ -3,11 +3,12 @@ package org.download.novels.service;
 import j2html.tags.ContainerTag;
 import org.download.novels.enums.TypeSite;
 import org.download.novels.extractor.IExtractor;
+import org.download.novels.repository.NovelRepository;
 import org.download.novels.repository.model.Chapter;
 import org.download.novels.repository.model.Novel;
-import org.download.novels.repository.NovelRepository;
 import org.download.novels.service.lightnovel.LightNovel;
 import org.download.novels.service.novehall.NovelHall;
+import org.download.novels.service.novehall.NovelHallHttp;
 import org.download.novels.service.reaperscans.ReaperscansHttp;
 import org.download.novels.service.wuxiaworld.Wuxiaworld;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import static j2html.TagCreator.*;
 public record NovelServiceImpl(NovelRepository repository,
                                Wuxiaworld wuxiaworld,
                                LightNovel lightNovel,
-                               NovelHall novelHall,
+                               NovelHallHttp novelHall,
                                ReaperscansHttp reaperscans) implements NovelService {
 
     @Override

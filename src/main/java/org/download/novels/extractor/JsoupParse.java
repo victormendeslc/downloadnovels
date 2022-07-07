@@ -23,7 +23,7 @@ public abstract class JsoupParse extends AbstractWriter {
         Thread thread = new Thread(() -> {
             try {
                 Document doc = Jsoup.connect(url).get();
-                log.info("Connected {} ", url);
+                log.info("Chapter {} and Connected {} ", numberChapter, url);
                 Element body = doc.body();
                 String title = createTitle(getTitle(doc));
                 String content = getContent(body);

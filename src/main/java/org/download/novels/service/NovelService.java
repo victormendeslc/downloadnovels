@@ -6,6 +6,7 @@ import org.download.novels.repository.model.Novel;
 import java.util.List;
 
 public interface NovelService {
+
     void create(TypeSite type, String file, String page);
 
     String export(String novelName);
