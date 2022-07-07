@@ -3,6 +3,7 @@ package org.download.novels.service;
 import j2html.tags.ContainerTag;
 import org.download.novels.enums.TypeSite;
 import org.download.novels.extractor.IExtractor;
+import org.download.novels.repository.model.Chapter;
 import org.download.novels.repository.model.Novel;
 import org.download.novels.repository.NovelRepository;
 import org.download.novels.service.lightnovel.LightNovel;
@@ -58,19 +59,20 @@ public record NovelServiceImpl(NovelRepository repository,
 
     public String export(String novelName) {
         Novel novel = repository.findByNovelName(novelName).orElseThrow();
+        List<Chapter> chapters = novel.getChapters().stream().sorted().toList();
         return html(
                 head(title(novel.getNovelName())),
                 body(
                         h1(novelName),
                         label("Index"),
-                        ol(createIndex(novel)),
-                        div(attrs("#container"), createContent(novel))
+                        ol(createIndex(chapters)),
+                        div(attrs("#container"), createContent(chapters))
                 )
         ).render();
     }
 
-    private ContainerTag[] createContent(Novel novel) {
-        return novel.getChapters().stream()
+    private ContainerTag[] createContent(List<Chapter> chapters) {
+        return chapters.stream()
                 .map(chapter ->
                         div(
                                 rawHtml(chapter.getTitle()),
@@ -80,8 +82,8 @@ public record NovelServiceImpl(NovelRepository repository,
                 .toArray(ContainerTag[]::new);
     }
 
-    private ContainerTag[] createIndex(Novel novel) {
-        return novel.getChapters().stream()
+    private ContainerTag[] createIndex(List<Chapter> chapters) {
+        return chapters.stream()
                 .map(chapter ->
                         li(
                                 a("Chapter " + chapter.getChapter())

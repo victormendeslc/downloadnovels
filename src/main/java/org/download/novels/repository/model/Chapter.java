@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table
-public class Chapter {
+public class Chapter implements Comparable<Chapter>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,5 +46,10 @@ public class Chapter {
     @Override
     public int hashCode() {
         return Objects.hash(id, chapter, title, content, nextChapter, novel);
+    }
+
+    @Override
+    public int compareTo(Chapter o) {
+        return this.chapter - o.getChapter();
     }
 }
