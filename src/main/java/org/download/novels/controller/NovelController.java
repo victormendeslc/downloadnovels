@@ -2,7 +2,7 @@ package org.download.novels.controller;
 
 import lombok.AllArgsConstructor;
 import org.download.novels.enums.TypeSite;
-import org.download.novels.model.Novel;
+import org.download.novels.repository.model.Novel;
 import org.download.novels.service.NovelServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

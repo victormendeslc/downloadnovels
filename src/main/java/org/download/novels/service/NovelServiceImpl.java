@@ -2,11 +2,12 @@ package org.download.novels.service;
 
 import j2html.tags.ContainerTag;
 import org.download.novels.enums.TypeSite;
-import org.download.novels.model.Novel;
+import org.download.novels.extractor.IExtractor;
+import org.download.novels.repository.model.Novel;
 import org.download.novels.repository.NovelRepository;
 import org.download.novels.service.lightnovel.LightNovel;
 import org.download.novels.service.novehall.NovelHall;
-import org.download.novels.service.reaperscans.Reaperscans;
+import org.download.novels.service.reaperscans.ReaperscansHttp;
 import org.download.novels.service.wuxiaworld.Wuxiaworld;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public record NovelServiceImpl(NovelRepository repository,
                                Wuxiaworld wuxiaworld,
                                LightNovel lightNovel,
                                NovelHall novelHall,
-                               Reaperscans reaperscans) implements NovelService {
+                               ReaperscansHttp reaperscans) implements NovelService {
 
     @Override
     public void create(TypeSite type, String file, String page) {
@@ -34,16 +35,21 @@ public record NovelServiceImpl(NovelRepository repository,
                 return entity;
             });
 
-            switch (type) {
-                case WUXIAWORLD -> wuxiaworld.execute(novel, file, page);
-                case LIGHTNOVEL -> lightNovel.execute(novel, file, page);
-                case NOVELHALL -> novelHall.execute(novel, file, page);
-                case REAPERSCANS -> reaperscans.execute(novel, file, page,true);
-            }
+            IExtractor extractor = executeByType(type);
+            extractor.execute(novel, file, page);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private IExtractor executeByType(TypeSite type) {
+        return switch (type) {
+            case WUXIAWORLD -> wuxiaworld;
+            case LIGHTNOVEL -> lightNovel;
+            case NOVELHALL -> novelHall;
+            case REAPERSCANS -> reaperscans;
+        };
     }
 
     @Override
@@ -54,8 +60,7 @@ public record NovelServiceImpl(NovelRepository repository,
 
     public String export(String novelName) {
         Novel novel = repository.findByNovelName(novelName).orElseThrow();
-
-        String render = html(
+        return html(
                 head(title(novel.getNovelName())),
                 body(
                         h1(novelName),
@@ -64,7 +69,6 @@ public record NovelServiceImpl(NovelRepository repository,
                         div(attrs("#container"), createContent(novel))
                 )
         ).render();
-        return render;
     }
 
     private ContainerTag[] createContent(Novel novel) {

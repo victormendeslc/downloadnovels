@@ -1,13 +1,4 @@
-package org.download.novels.leitor;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.download.novels.enums.OpcaoException;
-import org.download.novels.enums.TypeSite;
-import org.download.novels.service.lightnovel.LightNovel;
-import org.download.novels.service.novehall.NovelHall;
-import org.download.novels.service.wuxiaworld.Wuxiaworld;
-
-import java.io.IOException;
+package org.download.novels.extractor;
 
 
 public class Reader {

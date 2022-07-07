@@ -1,7 +1,7 @@
 package org.download.novels.service;
 
 import org.download.novels.enums.TypeSite;
-import org.download.novels.model.Novel;
+import org.download.novels.repository.model.Novel;
 
 import java.util.List;
 

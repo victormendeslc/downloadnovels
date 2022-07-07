@@ -1,4 +1,4 @@
-package org.download.novels.model;
+package org.download.novels.repository.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
