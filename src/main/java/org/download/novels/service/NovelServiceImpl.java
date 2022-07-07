@@ -34,9 +34,7 @@ public record NovelServiceImpl(NovelRepository repository,
                 repository.flush();
                 return entity;
             });
-
-            IExtractor extractor = executeByType(type);
-            extractor.execute(novel, file, page);
+            executeByType(type).execute(novel, file, page);
         } catch (Exception e) {
             e.printStackTrace();
         }

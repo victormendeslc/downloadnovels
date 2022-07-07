@@ -23,7 +23,7 @@ public abstract class Writer extends AbstractWriter {
         Thread thread = new Thread(() -> {
             doExecute(novel, url);
         });
-        thread.setName(novel.getNovelName().trim().toLowerCase().concat(String.valueOf(numberChapter)));
+        thread.setName(novel.getNovelName().trim().toLowerCase());
         thread.start();
     }
 
