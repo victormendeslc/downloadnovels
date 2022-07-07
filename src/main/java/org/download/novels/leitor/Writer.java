@@ -36,6 +36,7 @@ public abstract class Writer implements Extractor {
             thread = new Thread(() -> {
                 ChromeDriver driver = new ChromeDriver();
                 doExecute(novel, url, driver);
+                closeDriver(driver);
             });
         } else {
             thread = new Thread(() -> {
@@ -48,12 +49,10 @@ public abstract class Writer implements Extractor {
     }
 
     private void doExecute(Novel novel, String url, ChromeDriver driver) {
-        driver.navigate().to(url);
-        try {
-            driver.wait(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        driver.executeScript("window.open('');");
+        driver.switchTo().window("0");
+        driver.get(url);
+
         Chapter chapter = createChapter(novel, driver);
         String hrefNext = nextPage(driver);
         if (Objects.nonNull(hrefNext)) {
@@ -63,7 +62,6 @@ public abstract class Writer implements Extractor {
         } else {
             chapterRepository.save(chapter);
         }
-        closeDriver(driver);
     }
 
     private void doExecute(Novel novel, String url) {
