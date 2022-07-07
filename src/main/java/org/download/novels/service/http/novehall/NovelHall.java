@@ -1,4 +1,4 @@
-package org.download.novels.service.novehall;
+package org.download.novels.service.http.novehall;
 
 
 import org.download.novels.extractor.Writer;

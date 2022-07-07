@@ -1,4 +1,4 @@
-package org.download.novels.service.lightnovel;
+package org.download.novels.service.driver.lightnovel;
 
 import org.download.novels.extractor.Writer;
 import org.download.novels.repository.ChapterRepository;

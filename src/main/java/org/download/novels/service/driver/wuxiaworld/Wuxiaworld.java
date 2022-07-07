@@ -1,4 +1,4 @@
-package org.download.novels.service.wuxiaworld;
+package org.download.novels.service.driver.wuxiaworld;
 
 import org.download.novels.extractor.Writer;
 import org.download.novels.repository.ChapterRepository;

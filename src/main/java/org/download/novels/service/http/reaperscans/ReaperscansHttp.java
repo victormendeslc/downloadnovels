@@ -1,4 +1,4 @@
-package org.download.novels.service.reaperscans;
+package org.download.novels.service.http.reaperscans;
 
 import org.download.novels.extractor.JsoupParse;
 import org.download.novels.repository.ChapterRepository;
