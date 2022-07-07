@@ -1,9 +1,10 @@
 package org.download.novels.controller;
 
-import lombok.AllArgsConstructor;
+import jakarta.servlet.http.HttpServletResponse;
 import org.download.novels.enums.TypeSite;
 import org.download.novels.repository.model.Novel;
-import org.download.novels.service.NovelServiceImpl;
+import org.download.novels.service.ExportService;
+import org.download.novels.service.NovelService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@AllArgsConstructor
-@Controller
-public class NovelController {
+import java.io.IOException;
 
-    private final NovelServiceImpl service;
+@Controller
+public record NovelController(ExportService exportService,
+                              NovelService service) {
 
     @GetMapping("/exportHtml")
     public String download(Model model) {
@@ -23,10 +24,21 @@ public class NovelController {
         return "exportHtml";
     }
 
+    @PostMapping("/exportPdf")
+    @ResponseBody
+    public void downloadFile(@ModelAttribute(name = "novelForm") Novel novel, Model model, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename = " + novel.getNovelName().concat(".pdf");
+        response.setHeader(headerKey, headerValue);
+
+        exportService.export(novel.getNovelName(), response.getOutputStream());
+    }
+
     @PostMapping("/exportHtml")
     @ResponseBody
     public String exportHtml(@ModelAttribute(name = "novelForm") Novel novel, Model m) {
-        return service.export(novel.getNovelName());
+        return exportService.export(novel.getNovelName());
     }
 
 

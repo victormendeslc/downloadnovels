@@ -9,7 +9,5 @@ public interface NovelService {
 
     void create(TypeSite type, String file, String page);
 
-    String export(String novelName);
-
     List<Novel> getAllNovels();
 }

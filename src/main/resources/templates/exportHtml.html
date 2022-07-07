@@ -24,7 +24,7 @@
                     <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="#" th:href="@{/exportHtml}">Export Html <span
+                    <a class="nav-link" href="#" th:href="@{/exportHtml}">Export <span
                             class="sr-only">(current)</span></a>
                 </li>
             </ul>
@@ -48,6 +48,20 @@
                 </div>
                 <div class="md-12">
                     <button type="submit" class="btn btn-primary" value="exportHtml">Export to Html</button>
+                </div>
+            </form>
+            <form th:action="@{/exportPdf}" th:object="${novelForm}" method="post">
+                <div class="mb-4">
+                    <label>Choice novel</label>
+                    <select class="form-select" aria-label="Default select example" name="novelName">
+                        <option selected>Open this select menu</option>
+                        <span th:each="novel:${novels}">
+                         <option th:text="${novel.novelName}"  th:value="${novel.novelName}" ></option>
+                        </span>
+                    </select>
+                </div>
+                <div class="md-12">
+                    <button type="submit" class="btn btn-primary" value="exportHtml">Export to Pdf</button>
                 </div>
             </form>
         </div>
