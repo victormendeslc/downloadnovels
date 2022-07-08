@@ -13,7 +13,7 @@ import java.io.IOException;
 @Slf4j
 public abstract class JsoupParse extends AbstractWriter {
 
-    public JsoupParse(ChapterRepository chapterRepository) {
+    protected JsoupParse(ChapterRepository chapterRepository) {
         super(chapterRepository);
     }
 
@@ -32,7 +32,8 @@ public abstract class JsoupParse extends AbstractWriter {
                 Chapter chapter = getChapter(novel, title, content);
                 chapter.setNextChapter(nextPage);
                 save(chapter);
-                if (!nextPage.isEmpty()) {
+
+                if (verifyNextPage(nextPage)) {
                     execute(novel, file, nextPage);
                 }
             } catch (IOException e) {
@@ -42,6 +43,10 @@ public abstract class JsoupParse extends AbstractWriter {
         log.info("Finished");
         thread.setName(novel.getNovelName().trim().toLowerCase());
         thread.start();
+    }
+
+    private boolean verifyNextPage(String nextPage) {
+        return !nextPage.isEmpty() && !nextPage.contains("javascript") && !nextPage.contains("#");
     }
 
     protected abstract String getTitle(Document document);

@@ -1,39 +1,33 @@
 package org.download.novels.service;
 
 import org.download.novels.enums.TypeSite;
-import org.download.novels.extractor.IExtractor;
 import org.download.novels.repository.NovelRepository;
+import org.download.novels.repository.model.Chapter;
 import org.download.novels.repository.model.Novel;
-import org.download.novels.service.driver.lightnovel.LightNovel;
-import org.download.novels.service.driver.wuxiaworld.Wuxiaworld;
-import org.download.novels.service.http.novehall.NovelHallHttp;
-import org.download.novels.service.http.novelpub.NovelPubHttp;
-import org.download.novels.service.http.reaperscans.ReaperscansHttp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
-public record NovelServiceImpl(NovelRepository repository,
-                               Wuxiaworld wuxiaworld,
-                               LightNovel lightNovel,
-                               NovelHallHttp novelHall,
-                               ReaperscansHttp reaperscans,
-                               NovelPubHttp novelPubHttp) implements NovelService {
+public class NovelServiceImpl implements NovelService {
+
+    @Autowired
+    private NovelRepository repository;
+
+    @Autowired
+    private WriterFactory factory;
 
     @Override
     public void create(TypeSite type, String file, String page) {
         try {
-            Novel novel = repository.findByNovelName(file).orElseGet(() -> {
-                Novel entity = new Novel();
-                entity.setNovelName(file);
-                entity.setPage(page);
-                entity.setType(type);
-                repository.save(entity);
-                repository.flush();
-                return entity;
-            });
-            executeByType(type).execute(novel, file, page);
+            Novel novel = getNovel(type, file, page);
+            if (Objects.nonNull(novel.getId()) && page.isEmpty()) {
+                Chapter chapter = novel.lastChapter().orElseThrow();
+                page = chapter.getNextChapter();
+            }
+            factory.executeByType(type).execute(novel, file, page);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,15 +39,15 @@ public record NovelServiceImpl(NovelRepository repository,
         return repository.findAll();
     }
 
-    private IExtractor executeByType(TypeSite type) {
-        return switch (type) {
-            case WUXIAWORLD -> wuxiaworld;
-            case LIGHTNOVEL -> lightNovel;
-            case NOVELHALL -> novelHall;
-            case REAPERSCANS -> reaperscans;
-            case NOVELPUB -> novelPubHttp;
-        };
+    private Novel getNovel(TypeSite type, String file, String page) {
+        return repository.findByNovelName(file).orElseGet(() -> {
+            Novel entity = new Novel();
+            entity.setNovelName(file);
+            entity.setPage(page);
+            entity.setType(type);
+            repository.save(entity);
+            repository.flush();
+            return entity;
+        });
     }
-
-
 }

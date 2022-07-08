@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 
 @Controller
-public record NovelController(ExportService exportService,
-                              NovelService service) {
+public record NovelController(ExportService exportService, NovelService service) {
 
     @GetMapping("/exportHtml")
     public String download(Model model) {

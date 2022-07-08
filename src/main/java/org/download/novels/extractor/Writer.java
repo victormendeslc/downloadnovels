@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public abstract class Writer extends AbstractWriter {
 
-    public Writer(ChapterRepository chapterRepository) {
+    protected Writer(ChapterRepository chapterRepository) {
         super(chapterRepository);
     }
 
@@ -20,9 +20,7 @@ public abstract class Writer extends AbstractWriter {
     public void execute(Novel novel, String file, String url) {
         verifyChapter(novel);
 
-        Thread thread = new Thread(() -> {
-            doExecute(novel, url);
-        });
+        Thread thread = new Thread(() -> doExecute(novel, url));
         thread.setName(novel.getNovelName().trim().toLowerCase());
         thread.start();
     }
@@ -44,7 +42,7 @@ public abstract class Writer extends AbstractWriter {
 
     private void saveAndVerifyNext(Novel novel, WebDriver driver, Chapter chapter) {
         String hrefNext = nextPage(driver);
-        if (Objects.nonNull(hrefNext)) {
+        if (Objects.nonNull(hrefNext) && !hrefNext.contains("javascript")) {
             chapter.setNextChapter(hrefNext);
             save(chapter);
             closeDriver(driver);

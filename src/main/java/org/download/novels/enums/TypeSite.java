@@ -10,7 +10,8 @@ public enum TypeSite {
     WUXIAWORLD("Wuxiaworld"),
     NOVELHALL("NovelHall"),
     REAPERSCANS("Reaperscans"),
-    NOVELPUB("Novelpub");
+    NOVELPUB("Novelpub"),
+    WOOPREAD("Woopread");
 
     private final String title;
 

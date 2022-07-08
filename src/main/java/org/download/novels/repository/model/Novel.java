@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.download.novels.enums.TypeSite;
 
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table
@@ -17,7 +14,7 @@ import java.util.UUID;
 public class Novel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, unique = true, nullable = false,length = 16 )
+    @Column(name = "id", updatable = false, unique = true, nullable = false, length = 16)
     private UUID id;
 
     @Column
@@ -44,5 +41,11 @@ public class Novel {
     @Override
     public int hashCode() {
         return Objects.hash(id, page, novelName, type);
+    }
+
+    public Optional<Chapter> lastChapter() {
+        return this.getChapters().stream()
+                .sorted(Comparator.comparingInt(Chapter::getPage))
+                .reduce((first, second) -> second);
     }
 }

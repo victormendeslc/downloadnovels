@@ -16,20 +16,24 @@ public class Wuxiaworld extends Writer {
 
     @Override
     protected String extractTitle(WebDriver driver) {
-        WebElement chapterPage = driver.findElement(By.id("chapter-page"));
+        WebElement chapterPage = getChapterPage(driver);
         return chapterPage.findElement(By.cssSelector("h4.MuiTypography-root")).getAttribute("innerHTML");
+    }
+
+    private WebElement getChapterPage(WebDriver driver) {
+        return driver.findElement(By.id("chapter-page"));
     }
 
     @Override
     protected String extractContent(WebDriver driver) {
-        WebElement chapterPage = driver.findElement(By.id("chapter-page"));
+        WebElement chapterPage = getChapterPage(driver);
         WebElement content = chapterPage.findElement(By.cssSelector("div.chapter-content"));
         return content.getAttribute("innerHTML");
     }
 
     @Override
     protected String nextPage(WebDriver driver) {
-        WebElement chapterPage = driver.findElement(By.id("chapter-page"));
+        WebElement chapterPage = getChapterPage(driver);
         boolean naoExiste = chapterPage.findElements(By.linkText("NEXT CHAPTER")).isEmpty();
         if (!naoExiste) {
             return chapterPage.findElement(By.linkText("NEXT CHAPTER")).getAttribute("href");

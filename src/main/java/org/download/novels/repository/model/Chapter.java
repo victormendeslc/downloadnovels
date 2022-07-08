@@ -3,6 +3,7 @@ package org.download.novels.repository.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -12,15 +13,19 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table
-public class Chapter implements Comparable<Chapter>{
+public class Chapter implements Comparable<Chapter> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, unique = true, nullable = false , length = 16)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(columnDefinition = "char" ,name = "id", updatable = false, unique = true, nullable = false , length = 36)
     private UUID id;
 
     @Column
-    private Integer chapter;
+    private Integer page;
 
     @Column
     private String title;
@@ -39,17 +44,17 @@ public class Chapter implements Comparable<Chapter>{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Chapter chapter1 = (Chapter) o;
-        return Objects.equals(id, chapter1.id) && Objects.equals(chapter, chapter1.chapter) && Objects.equals(title, chapter1.title) && Objects.equals(content, chapter1.content) && Objects.equals(nextChapter, chapter1.nextChapter) && Objects.equals(novel, chapter1.novel);
+        Chapter chapter = (Chapter) o;
+        return Objects.equals(id, chapter.id) && Objects.equals(page, chapter.page) && Objects.equals(title, chapter.title) && Objects.equals(content, chapter.content) && Objects.equals(nextChapter, chapter.nextChapter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, chapter, title, content, nextChapter, novel);
+        return Objects.hash(id, page, title, content, nextChapter);
     }
 
     @Override
     public int compareTo(Chapter o) {
-        return this.chapter - o.getChapter();
+        return this.page - o.getPage();
     }
 }
