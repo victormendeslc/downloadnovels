@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static j2html.TagCreator.*;
@@ -45,6 +46,12 @@ public class ExportServiceImpl implements ExportService {
         String html = export(novelName);
 
         toPdf(outputStream, html, novelName);
+    }
+
+    @Override
+    public void export(String novelName, ServletOutputStream outputStream, String exportHtml) throws IOException {
+        String html = export(novelName);
+        outputStream.write(html.getBytes(StandardCharsets.UTF_8));
     }
 
     private void toPdf(ServletOutputStream os, String html, String novelName) {

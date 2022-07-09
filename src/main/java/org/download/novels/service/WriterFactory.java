@@ -5,6 +5,7 @@ import org.download.novels.extractor.IExtractor;
 import org.download.novels.repository.NovelRepository;
 import org.download.novels.service.driver.lightnovel.LightNovel;
 import org.download.novels.service.driver.wuxiaworld.Wuxiaworld;
+import org.download.novels.service.driver.neoxscans.NeoxScans;
 import org.download.novels.service.http.novehall.NovelHallHttp;
 import org.download.novels.service.http.novelpub.NovelPubHttp;
 import org.download.novels.service.http.reaperscans.ReaperscansHttp;
@@ -27,9 +28,10 @@ public class WriterFactory {
     private ReaperscansHttp reaperscans;
     @Autowired
     private NovelPubHttp novelPubHttp;
-
     @Autowired
     private Woopread woopread;
+    @Autowired
+    private NeoxScans neoxScans;
 
     public IExtractor executeByType(TypeSite type) {
         return switch (type) {
@@ -38,7 +40,8 @@ public class WriterFactory {
             case NOVELHALL -> novelHall;
             case REAPERSCANS -> reaperscans;
             case NOVELPUB -> novelPubHttp;
-            case WOOPREAD -> woopread;
+            case WOOPREAD, WUXIAWORLDSITE -> woopread;
+            case NEOXSCANS -> neoxScans;
         };
     }
 }

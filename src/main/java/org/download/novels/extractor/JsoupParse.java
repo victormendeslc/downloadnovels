@@ -39,8 +39,8 @@ public abstract class JsoupParse extends AbstractWriter {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            log.info("Finished");
         });
-        log.info("Finished");
         thread.setName(novel.getNovelName().trim().toLowerCase());
         thread.start();
     }

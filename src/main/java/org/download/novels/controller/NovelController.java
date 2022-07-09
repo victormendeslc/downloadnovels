@@ -36,8 +36,14 @@ public record NovelController(ExportService exportService, NovelService service)
 
     @PostMapping("/exportHtml")
     @ResponseBody
-    public String exportHtml(@ModelAttribute(name = "novelForm") Novel novel, Model m) {
-        return exportService.export(novel.getNovelName());
+    public String exportHtml(@ModelAttribute(name = "novelForm") Novel novel, Model m, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename = " + novel.getNovelName().concat(".html");
+        response.setHeader(headerKey, headerValue);
+
+        exportService.export(novel.getNovelName(), response.getOutputStream(), "html");
+        return "exportHtml";
     }
 
 

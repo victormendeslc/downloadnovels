@@ -46,9 +46,8 @@ https://translate.google.com.br/?sl=pt&tl=en&op=docs
 https://convertio.co/pt/download/94054a2aaf3f0b562327f0fd28ea89ff96b9cf/
 
 ### Next novels
-- The World After the Fall
 - Reincarnation Of The Strongest Sword God
-- SSS-Class Suicide Hunter - novelpub
+- Damn Reincarnation - https://www.novelmt.com/
 
 ## Keep in mind!
 

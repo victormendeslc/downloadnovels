@@ -11,7 +11,9 @@ public enum TypeSite {
     NOVELHALL("NovelHall"),
     REAPERSCANS("Reaperscans"),
     NOVELPUB("Novelpub"),
-    WOOPREAD("Woopread");
+    WOOPREAD("Woopread"),
+    WUXIAWORLDSITE("Wuxiaworldsite"),
+    NEOXSCANS("NeoxScans");
 
     private final String title;
 
