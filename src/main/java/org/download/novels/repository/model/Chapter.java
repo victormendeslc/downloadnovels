@@ -28,6 +28,9 @@ public class Chapter implements Comparable<Chapter> {
     private Integer page;
 
     @Column
+    private String novelIndex;
+
+    @Column
     private String title;
 
     @Column(length = 100000)
@@ -57,4 +60,5 @@ public class Chapter implements Comparable<Chapter> {
     public int compareTo(Chapter o) {
         return this.page - o.getPage();
     }
+
 }

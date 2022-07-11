@@ -18,23 +18,24 @@ public abstract class JsoupParse extends AbstractWriter {
     }
 
     @Override
-    public void execute(Novel novel, String file, String url) {
+    public void execute(Novel novel, String url) {
         verifyChapter(novel);
         Thread thread = new Thread(() -> {
             try {
                 Document doc = Jsoup.connect(url).get();
                 log.info("Chapter {} and Connected {} ", numberChapter, url);
                 Element body = doc.body();
+                String index=getTitle(doc);
                 String title = createTitle(getTitle(doc));
                 String content = getContent(body);
                 String nextPage = getNextPage(doc);
 
-                Chapter chapter = getChapter(novel, title, content);
+                Chapter chapter = getChapter(novel, title, content,index);
                 chapter.setNextChapter(nextPage);
                 save(chapter);
 
                 if (verifyNextPage(nextPage)) {
-                    execute(novel, file, nextPage);
+                    execute(novel, nextPage);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

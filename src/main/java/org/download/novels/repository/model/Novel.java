@@ -20,6 +20,9 @@ public class Novel {
     @Column
     private String page;
 
+    @Transient
+    private String prologuePage;
+
     @Column
     private String novelName;
 

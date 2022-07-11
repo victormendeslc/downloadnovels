@@ -84,7 +84,7 @@ public class ExportServiceImpl implements ExportService {
         return chapters.stream()
                 .map(chapter ->
                         li(
-                                a("Chapter " + chapter.getPage())
+                                a("Chapter " + chapter.getNovelIndex())
                                         .withHref("#chapter" + chapter.getPage())
                         )
 

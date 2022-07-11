@@ -1,10 +1,13 @@
 package org.download.novels.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.Setter;
 import org.download.novels.enums.TypeSite;
 import org.download.novels.repository.model.Novel;
 import org.download.novels.service.ExportService;
 import org.download.novels.service.NovelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 
+@Setter
+@Getter
 @Controller
-public record NovelController(ExportService exportService, NovelService service) {
+public class NovelController {
+
+    @Autowired
+    private ExportService exportService;
+    @Autowired private NovelService service;
 
     @GetMapping("/exportHtml")
     public String download(Model model) {
@@ -47,13 +56,14 @@ public record NovelController(ExportService exportService, NovelService service)
     }
 
 
+    @GetMapping("/")
+    public String downloadGet(Model model) {
+        model.addAttribute("websites", service.getAllWebSites());
+        return "index";
+    }
     @PostMapping("/download")
     public String downloadPage(@ModelAttribute(name = "novelForm") Novel novel, Model m) {
-        String novelName = novel.getNovelName();
-        String page = novel.getPage();
-        TypeSite type = novel.getType();
-
-        service.create(type, novelName, page);
+        service.create(novel);
 
         return "index";
 

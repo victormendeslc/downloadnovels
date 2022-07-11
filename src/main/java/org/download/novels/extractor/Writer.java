@@ -17,7 +17,7 @@ public abstract class Writer extends AbstractWriter {
     }
 
     @Override
-    public void execute(Novel novel, String file, String url) {
+    public void execute(Novel novel, String url) {
         verifyChapter(novel);
 
         Thread thread = new Thread(() -> doExecute(novel, url));
@@ -35,9 +35,10 @@ public abstract class Writer extends AbstractWriter {
         WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         String title = driverWait.until(d -> createTitle(extractTitle(d)));
+        String index = driverWait.until(this::extractTitle);
         String content = driverWait.until(this::extractContent);
 
-        return getChapter(novel, title, content);
+        return getChapter(novel, title, content, index);
     }
 
     private void saveAndVerifyNext(Novel novel, WebDriver driver, Chapter chapter) {

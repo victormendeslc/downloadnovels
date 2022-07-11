@@ -1,13 +1,15 @@
 package org.download.novels.service;
 
-import org.download.novels.enums.TypeSite;
+import org.download.novels.pojo.Website;
 import org.download.novels.repository.model.Novel;
 
 import java.util.List;
 
 public interface NovelService {
 
-    void create(TypeSite type, String file, String page);
-
     List<Novel> getAllNovels();
+
+    List<Website> getAllWebSites();
+
+    void create(Novel novel);
 }

@@ -16,16 +16,25 @@ public abstract class AbstractWriter implements IWriter {
         this.chapterRepository = chapterRepository;
     }
 
+    @Override
+    public void execute(Novel novel, String page, boolean prologue) {
+        if (prologue) {
+            numberChapter = -1;
+        }
+        execute(novel, page);
+    }
+
     protected void verifyChapter(Novel novel) {
-        if (!novel.getChapters().isEmpty() && numberChapter == 0) {
+        if (!novel.getChapters().isEmpty() && numberChapter <= 0) {
             Optional<Chapter> lastElement = novel.lastChapter();
             lastElement.ifPresent(chapter -> numberChapter = chapter.getPage());
         }
     }
 
-    protected Chapter getChapter(Novel novel, String title, String content) {
+    protected Chapter getChapter(Novel novel, String title, String content, String index) {
         Chapter chapter = new Chapter();
         chapter.setPage(this.numberChapter);
+        chapter.setNovelIndex(index);
         chapter.setNovel(novel);
         chapter.setTitle(title);
         chapter.setContent(content);
