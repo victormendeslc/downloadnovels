@@ -6,14 +6,16 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum TypeSite {
-    LIGHTNOVEL("LightNovel"),
-    WUXIAWORLD("Wuxiaworld"),
+    LIGHTNOVEL("LightNovel- FAIL"),
+    WUXIAWORLD("Wuxiaworld - DRIVER"),
     NOVELHALL("NovelHall"),
     REAPERSCANS("Reaperscans"),
-    NOVELPUB("Novelpub"),
+    NOVELPUB("Novelpub - FAIL"),
     WOOPREAD("Woopread"),
-    WUXIAWORLDSITE("Wuxiaworldsite"),
-    NEOXSCANS("NeoxScans");
+    WUXIAWORLDSITE("Wuxiaworldsite - DRIVER"),
+
+    NEOXSCANS("NeoxScans"),
+    KOREANMTL("koreanmtl");
 
     private final String title;
 

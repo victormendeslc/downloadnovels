@@ -1,11 +1,13 @@
 package org.download.novels.extractor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.download.novels.repository.ChapterRepository;
 import org.download.novels.repository.model.Chapter;
 import org.download.novels.repository.model.Novel;
 
 import java.util.Optional;
 
+@Slf4j
 public abstract class AbstractWriter implements IWriter {
 
     private final ChapterRepository chapterRepository;
@@ -48,5 +50,6 @@ public abstract class AbstractWriter implements IWriter {
 
     protected void save(Chapter chapter) {
         chapterRepository.save(chapter);
+        log.info("Saved {}", chapter.getId());
     }
 }

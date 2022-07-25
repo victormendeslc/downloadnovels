@@ -45,7 +45,8 @@ public class NovelServiceImpl implements NovelService {
                 repository.flush();
                 return entity;
             });
-            String page = Optional.of(entity.getProloguePage()).orElse(novel.getPage());
+
+            String page = entity.getProloguePage() != null && !entity.getProloguePage().isEmpty() ? entity.getProloguePage() : novel.getPage();
             factory.executeByType(novel.getType()).execute(novel, page, Objects.nonNull(entity.getProloguePage()));
         } catch (Exception e) {
             e.printStackTrace();
