@@ -7,15 +7,15 @@ import lombok.Getter;
 @Getter
 public enum TypeSite {
     LIGHTNOVEL("LightNovel- FAIL"),
+    NOVELPUB("Novelpub - FAIL"),
+    WUXIAWORLDSITE("Wuxiaworldsite - DRIVER"),
     WUXIAWORLD("Wuxiaworld - DRIVER"),
     NOVELHALL("NovelHall"),
     REAPERSCANS("Reaperscans"),
-    NOVELPUB("Novelpub - FAIL"),
     WOOPREAD("Woopread"),
-    WUXIAWORLDSITE("Wuxiaworldsite - DRIVER"),
-
     NEOXSCANS("NeoxScans"),
-    KOREANMTL("koreanmtl");
+    KOREANMTL("koreanmtl"),
+    CENTRALNOVEL("CentralNovel");
 
     private final String title;
 

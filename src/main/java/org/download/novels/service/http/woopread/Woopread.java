@@ -38,6 +38,10 @@ public class Woopread extends JsoupParse {
 
     @Override
     protected String getNextPage(Document document) {
-        return Objects.requireNonNull(document.selectFirst("div.nav-next > a")).attr("href");
+        Element element = document.selectFirst("div.nav-next > a");
+        if (element != null && !element.attr("href").isEmpty()) {
+            return element.attr("href");
+        }
+        return null;
     }
 }

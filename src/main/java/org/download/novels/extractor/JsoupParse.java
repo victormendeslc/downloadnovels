@@ -20,9 +20,7 @@ public abstract class JsoupParse extends AbstractWriter {
     @Override
     public void execute(Novel novel, String url) {
         verifyChapter(novel);
-        Thread thread = new Thread(() -> {
-            retry(novel, url, true);
-        });
+        Thread thread = new Thread(() -> retry(novel, url, true));
         thread.setName(novel.getNovelName().trim().toLowerCase());
         thread.start();
     }
@@ -54,7 +52,7 @@ public abstract class JsoupParse extends AbstractWriter {
     }
 
     private boolean verifyNextPage(String nextPage) {
-        return !nextPage.isEmpty() && !nextPage.contains("javascript") && !nextPage.contains("#");
+        return nextPage != null && !nextPage.isEmpty() && !nextPage.contains("javascript") && !nextPage.contains("#");
     }
 
     protected abstract String getTitle(Document document);
