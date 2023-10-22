@@ -26,6 +26,16 @@ Websites availables:
 - wuxiaworld - load time for this is slow
 - lightnovelpub
 - novelhall
+- ~~LightNove~~
+- ~~Novelpub~~
+- Wuxiaworldsite
+- NovelHall
+- Reaperscans
+- Woopread
+- NeoxScans
+- koreanmtl
+- Light novel Brasil
+- Central Novel - PT-BR
 
 ## Getting Started
 

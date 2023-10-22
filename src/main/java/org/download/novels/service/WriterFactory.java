@@ -7,6 +7,7 @@ import org.download.novels.service.driver.lightnovel.LightNovel;
 import org.download.novels.service.driver.neoxscans.NeoxScans;
 import org.download.novels.service.driver.wuxiaworld.Wuxiaworld;
 import org.download.novels.service.http.centralnovel.CentralNovel;
+import org.download.novels.service.http.lightnovelbrasil.LightNovelBrasil;
 import org.download.novels.service.http.novehall.NovelHallHttp;
 import org.download.novels.service.http.novelpub.NovelPubHttp;
 import org.download.novels.service.http.reaperscans.ReaperscansHttp;
@@ -27,18 +28,20 @@ public class WriterFactory {
     private final NeoxScans neoxScans;
     private final Koreanmtl koreanmtl;
     private final CentralNovel centralNovel;
+    private final LightNovelBrasil lightNovelBrasil;
 
     public IExtractor executeByType(TypeSite type) {
         return switch (type) {
             case WUXIAWORLD -> wuxiaworld;
-            case LIGHTNOVEL -> lightNovel;
+            //case LIGHTNOVEL -> lightNovel;
             case NOVELHALL -> novelHall;
             case REAPERSCANS -> reaperscans;
-            case NOVELPUB -> novelPubHttp;
+            //case NOVELPUB -> novelPubHttp;
             case WOOPREAD, WUXIAWORLDSITE -> woopread;
             case KOREANMTL -> koreanmtl;
             case NEOXSCANS -> neoxScans;
             case CENTRALNOVEL -> centralNovel;
+            case LIGHTNOVELBRASIL -> lightNovelBrasil;
         };
     }
 }

@@ -7,12 +7,12 @@ import org.download.novels.repository.model.Chapter;
 import org.download.novels.repository.model.Novel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class NovelServiceImpl implements NovelService {
@@ -34,7 +34,7 @@ public class NovelServiceImpl implements NovelService {
         return Arrays.stream(TypeSite.values())
                 .map(Website::new)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -46,11 +46,23 @@ public class NovelServiceImpl implements NovelService {
                 return entity;
             });
 
-            String page = entity.getProloguePage() != null && !entity.getProloguePage().isEmpty() ? entity.getProloguePage() : novel.getPage();
-            factory.executeByType(novel.getType()).execute(novel, page, Objects.nonNull(entity.getProloguePage()));
+            var page = getStartPage(entity, novel);
+            var extrator = factory.executeByType(novel.getType());
+            if (extrator != null) {
+                extrator.execute(novel, page, StringUtils.hasText(entity.getProloguePage()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static String getStartPage(Novel entity, Novel novel) {
+        if (CollectionUtils.isEmpty(novel.getChapters())) {
+            return entity.getProloguePage() != null && !entity.getProloguePage().isEmpty() ? entity.getProloguePage() : novel.getPage();
+        }
+
+        Chapter chapter = novel.getChapters().stream().max(Comparator.naturalOrder()).orElseThrow();
+        return chapter.getNextChapter();
     }
 
 }

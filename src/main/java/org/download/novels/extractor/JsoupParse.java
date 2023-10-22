@@ -20,9 +20,7 @@ public abstract class JsoupParse extends AbstractWriter {
     @Override
     public void execute(Novel novel, String url) {
         verifyChapter(novel);
-        Thread thread = new Thread(() -> retry(novel, url, true));
-        thread.setName(novel.getNovelName().trim().toLowerCase());
-        thread.start();
+       retry(novel, url, true);
     }
 
     private void retry(Novel novel, String url, boolean retry) {
@@ -35,8 +33,7 @@ public abstract class JsoupParse extends AbstractWriter {
             String content = getContent(body);
             String nextPage = getNextPage(doc);
 
-            Chapter chapter = getChapter(novel, title, content, index);
-            chapter.setNextChapter(nextPage);
+            Chapter chapter = getChapter(novel, title, content, index, nextPage);
             save(chapter);
 
             if (verifyNextPage(nextPage)) {
@@ -48,7 +45,6 @@ public abstract class JsoupParse extends AbstractWriter {
                 retry(novel, url, false);
             }
         }
-        log.info("Finished");
     }
 
     private boolean verifyNextPage(String nextPage) {

@@ -38,7 +38,7 @@ public abstract class Writer extends AbstractWriter {
         String index = driverWait.until(this::extractTitle);
         String content = driverWait.until(this::extractContent);
 
-        return getChapter(novel, title, content, index);
+        return getChapter(novel, title, content, index, null);
     }
 
     private void saveAndVerifyNext(Novel novel, WebDriver driver, Chapter chapter) {

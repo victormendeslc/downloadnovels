@@ -23,7 +23,9 @@ public abstract class AbstractWriter implements IWriter {
         if (prologue) {
             numberChapter = -1;
         }
-        execute(novel, page);
+        Thread thread = new Thread(() -> execute(novel, page));
+        thread.setName(novel.getNovelName().toLowerCase().trim().replace(" ",""));
+        thread.start();
     }
 
     protected void verifyChapter(Novel novel) {
@@ -33,14 +35,19 @@ public abstract class AbstractWriter implements IWriter {
         }
     }
 
-    protected Chapter getChapter(Novel novel, String title, String content, String index) {
+    protected Chapter getChapter(Novel novel, String title, String content, String index, String nextPage) {
         Chapter chapter = new Chapter();
-        chapter.setPage(this.numberChapter);
+        chapter.setPage(getNumberChapter(nextPage));
         chapter.setNovelIndex(index);
         chapter.setNovel(novel);
         chapter.setTitle(title);
         chapter.setContent(content);
+        chapter.setNextChapter(nextPage);
         return chapter;
+    }
+
+    protected Integer getNumberChapter(String nextPage) {
+        return this.numberChapter;
     }
 
     protected String createTitle(String titulo) {
@@ -50,6 +57,5 @@ public abstract class AbstractWriter implements IWriter {
 
     protected void save(Chapter chapter) {
         chapterRepository.save(chapter);
-        log.info("Saved {}", chapter.getId());
     }
 }

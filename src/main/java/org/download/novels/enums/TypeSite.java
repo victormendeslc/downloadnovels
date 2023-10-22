@@ -6,8 +6,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum TypeSite {
-    LIGHTNOVEL("LightNovel- FAIL"),
-    NOVELPUB("Novelpub - FAIL"),
+    //LIGHTNOVEL("LightNovel- FAIL"),
+    //NOVELPUB("Novelpub - FAIL"),
     WUXIAWORLDSITE("Wuxiaworldsite"),
     WUXIAWORLD("Wuxiaworld - DRIVER"),
     NOVELHALL("NovelHall"),
@@ -15,8 +15,8 @@ public enum TypeSite {
     WOOPREAD("Woopread"),
     NEOXSCANS("NeoxScans"),
     KOREANMTL("koreanmtl"),
-    CENTRALNOVEL("CentralNovel");
-
+    LIGHTNOVELBRASIL("Light novel Brasil"),
+    CENTRALNOVEL("Central Novel - PT-BR");
     private final String title;
 
 }
