@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum TypeSite {
     LIGHTNOVEL("LightNovel- FAIL"),
     NOVELPUB("Novelpub - FAIL"),
-    WUXIAWORLDSITE("Wuxiaworldsite - DRIVER"),
+    WUXIAWORLDSITE("Wuxiaworldsite"),
     WUXIAWORLD("Wuxiaworld - DRIVER"),
     NOVELHALL("NovelHall"),
     REAPERSCANS("Reaperscans"),
