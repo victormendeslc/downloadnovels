@@ -29,8 +29,11 @@ public class WuxiaCity extends JsoupParse {
     @Override
     protected String getNextPage(Document document) {
         URI uri = URI.create(document.baseUri());
-
-        String href = document.selectFirst("button:contains(Next chapter)").attr("data-url");
+        var button = document.selectFirst("button:contains(Next chapter)");
+        if (button == null) {
+            return null;
+        }
+        String href = button.attr("data-url");
         if (href.isEmpty() || href.contains("javascript")) {
             return href;
         }
