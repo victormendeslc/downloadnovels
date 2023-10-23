@@ -1,6 +1,7 @@
 package org.download.novels.extractor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.download.novels.repository.ChapterRepository;
 import org.download.novels.repository.model.Chapter;
 import org.download.novels.repository.model.Novel;
@@ -28,6 +29,7 @@ public abstract class JsoupParse extends AbstractWriter {
             Document doc = Jsoup.connect(url).get();
             doc.select("img").remove();
             doc.select("script").remove();
+            doc.select("criador").remove();
             log.info("Chapter {} and Connected {} ", numberChapter, url);
             Element body = doc.body();
             String index = getTitle(doc);
@@ -38,7 +40,7 @@ public abstract class JsoupParse extends AbstractWriter {
             Chapter chapter = getChapter(novel, title, content, index, nextPage);
             save(chapter);
 
-            if (verifyNextPage(nextPage)) {
+            if (verifyNextPage(nextPage) && ObjectUtils.isNotEmpty(content)) {
                 execute(novel, nextPage);
             }
         } catch (IOException e) {

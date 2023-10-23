@@ -1,5 +1,6 @@
 package org.download.novels.service.http.vulcan;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.download.novels.extractor.JsoupParse;
 import org.download.novels.repository.ChapterRepository;
 import org.jsoup.nodes.Document;
@@ -21,7 +22,13 @@ public class Vulcan extends JsoupParse {
 
     @Override
     protected String getContent(Element body) {
-        return Objects.requireNonNull(body.select("div.entry-content")).html();
+        if (ObjectUtils.isNotEmpty(body.select("div.entry-content"))) {
+            return body.select("div.entry-content").html();
+        }
+        if (ObjectUtils.isNotEmpty(body.select("div#Conteudo_post"))) {
+            return body.select("div#Conteudo_post").html();
+        }
+        return null;
     }
 
     @Override
