@@ -26,6 +26,8 @@ public abstract class JsoupParse extends AbstractWriter {
     private void retry(Novel novel, String url, boolean retry) {
         try {
             Document doc = Jsoup.connect(url).get();
+            doc.select("img").remove();
+            doc.select("script").remove();
             log.info("Chapter {} and Connected {} ", numberChapter, url);
             Element body = doc.body();
             String index = getTitle(doc);

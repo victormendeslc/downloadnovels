@@ -16,7 +16,8 @@ public enum TypeSite {
     NEOXSCANS("NeoxScans"),
     KOREANMTL("koreanmtl"),
     LIGHTNOVELBRASIL("Light novel Brasil"),
-    CENTRALNOVEL("Central Novel - PT-BR");
-    private final String title;
+    CENTRALNOVEL("Central Novel - PT-BR"),
+    WUXIACITY("WuxiaCity");
 
+    private final String title;
 }

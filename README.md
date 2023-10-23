@@ -36,6 +36,7 @@ Websites availables:
 - koreanmtl
 - Light novel Brasil
 - Central Novel - PT-BR
+- wuxia.city
 
 ## Getting Started
 

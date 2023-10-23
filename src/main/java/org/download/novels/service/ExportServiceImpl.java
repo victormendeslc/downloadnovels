@@ -31,7 +31,9 @@ public class ExportServiceImpl implements ExportService {
         List<Chapter> chapters = novel.getChapters().stream().sorted().toList();
 
         return html(
-                head(title(novel.getNovelName())),
+                head(
+                        title(novel.getNovelName()),
+                        meta().attr("charset", "UTF-8")),
                 body(
                         h1(novelName),
                         label("Index"),
@@ -43,9 +45,11 @@ public class ExportServiceImpl implements ExportService {
 
     @Override
     public void export(String novelName, ServletOutputStream outputStream) {
-        String html = export(novelName);
-
-        toPdf(outputStream, html, novelName);
+        org.jsoup.nodes.Document doc = Jsoup.parse(export(novelName));
+        doc.select("img").remove();
+        doc.select("script").remove();
+        var novoHtml = doc.html();
+        toPdf(outputStream, novoHtml, novelName);
     }
 
     @Override

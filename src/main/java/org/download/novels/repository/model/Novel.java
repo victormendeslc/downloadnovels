@@ -27,6 +27,7 @@ public class Novel {
     private String novelName;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private TypeSite type;
 
     @OneToMany

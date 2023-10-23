@@ -13,6 +13,7 @@ import org.download.novels.service.http.novelpub.NovelPubHttp;
 import org.download.novels.service.http.reaperscans.ReaperscansHttp;
 import org.download.novels.service.http.skydemonorder.Koreanmtl;
 import org.download.novels.service.http.woopread.Woopread;
+import org.download.novels.service.http.wuxiacity.WuxiaCity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,6 +30,7 @@ public class WriterFactory {
     private final Koreanmtl koreanmtl;
     private final CentralNovel centralNovel;
     private final LightNovelBrasil lightNovelBrasil;
+    private final WuxiaCity wuxiacity;
 
     public IExtractor executeByType(TypeSite type) {
         return switch (type) {
@@ -42,6 +44,7 @@ public class WriterFactory {
             case NEOXSCANS -> neoxScans;
             case CENTRALNOVEL -> centralNovel;
             case LIGHTNOVELBRASIL -> lightNovelBrasil;
+            case WUXIACITY -> wuxiacity;
         };
     }
 }
