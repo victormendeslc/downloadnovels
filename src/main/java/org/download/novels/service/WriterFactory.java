@@ -12,6 +12,7 @@ import org.download.novels.service.http.novehall.NovelHallHttp;
 import org.download.novels.service.http.novelpub.NovelPubHttp;
 import org.download.novels.service.http.reaperscans.ReaperscansHttp;
 import org.download.novels.service.http.skydemonorder.Koreanmtl;
+import org.download.novels.service.http.vulcan.Vulcan;
 import org.download.novels.service.http.woopread.Woopread;
 import org.download.novels.service.http.wuxiacity.WuxiaCity;
 import org.springframework.stereotype.Service;
@@ -31,20 +32,21 @@ public class WriterFactory {
     private final CentralNovel centralNovel;
     private final LightNovelBrasil lightNovelBrasil;
     private final WuxiaCity wuxiacity;
+    private final Vulcan vulcan;
+
 
     public IExtractor executeByType(TypeSite type) {
         return switch (type) {
             case WUXIAWORLD -> wuxiaworld;
-            //case LIGHTNOVEL -> lightNovel;
             case NOVELHALL -> novelHall;
             case REAPERSCANS -> reaperscans;
-            //case NOVELPUB -> novelPubHttp;
             case WOOPREAD, WUXIAWORLDSITE -> woopread;
             case KOREANMTL -> koreanmtl;
             case NEOXSCANS -> neoxScans;
             case CENTRALNOVEL -> centralNovel;
             case LIGHTNOVELBRASIL -> lightNovelBrasil;
             case WUXIACITY -> wuxiacity;
+            case VULCAN -> vulcan;
         };
     }
 }

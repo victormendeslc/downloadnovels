@@ -17,6 +17,7 @@ public enum TypeSite {
     KOREANMTL("koreanmtl"),
     LIGHTNOVELBRASIL("Light novel Brasil"),
     CENTRALNOVEL("Central Novel - PT-BR"),
+    VULCAN("Vulcan - PT-BR"),
     WUXIACITY("WuxiaCity");
 
     private final String title;

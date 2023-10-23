@@ -40,7 +40,7 @@ public class ExportServiceImpl implements ExportService {
                         ul(createIndex(chapters)),
                         div(attrs("#container"), createContent(chapters))
                 )
-        ).render();
+        ).attr("lan","pt-BR").render();
     }
 
     @Override
