@@ -30,6 +30,7 @@ public abstract class JsoupParse extends AbstractWriter {
             doc.select("img").remove();
             doc.select("script").remove();
             doc.select("criador").remove();
+
             log.info("Chapter {} and Connected {} ", numberChapter, url);
             Element body = doc.body();
             String index = getTitle(doc);
@@ -41,7 +42,7 @@ public abstract class JsoupParse extends AbstractWriter {
             save(chapter);
 
             if (verifyNextPage(nextPage) && ObjectUtils.isNotEmpty(content)) {
-                retry(novel, nextPage, true);
+                execute(novel, nextPage);
             }
             log.info("Finish {}", novel.getNovelName());
         } catch (IOException e) {

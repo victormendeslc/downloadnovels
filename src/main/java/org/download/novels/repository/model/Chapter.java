@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -21,7 +23,7 @@ public class Chapter implements Comparable<Chapter> {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(columnDefinition = "char" ,name = "id", updatable = false, unique = true, nullable = false , length = 36)
+    @Column(columnDefinition = "char", name = "id", updatable = false, unique = true, nullable = false, length = 36)
     private UUID id;
 
     @Column
@@ -48,7 +50,7 @@ public class Chapter implements Comparable<Chapter> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Chapter chapter = (Chapter) o;
-        return Objects.equals(id, chapter.id) && Objects.equals(page, chapter.page) && Objects.equals(title, chapter.title) && Objects.equals(content, chapter.content) && Objects.equals(nextChapter, chapter.nextChapter);
+        return Objects.equals(id, chapter.id) && Objects.equals(page, chapter.page);
     }
 
     @Override
@@ -58,7 +60,11 @@ public class Chapter implements Comparable<Chapter> {
 
     @Override
     public int compareTo(Chapter o) {
-        return this.page - o.getPage();
+        return Optional.ofNullable(this.page)
+                .orElse(BigDecimal.ZERO.intValue())
+                .compareTo(
+                        Optional.of(o.getPage()).orElse(BigDecimal.ZERO.intValue())
+                );
     }
 
 }

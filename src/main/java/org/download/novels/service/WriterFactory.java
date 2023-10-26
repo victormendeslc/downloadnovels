@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.download.novels.enums.TypeSite;
 import org.download.novels.extractor.IExtractor;
 import org.download.novels.service.driver.lightnovel.LightNovel;
-import org.download.novels.service.driver.neoxscans.NeoxScans;
+import org.download.novels.service.driver.neoxscans.NeoxScansHttp;
 import org.download.novels.service.driver.wuxiaworld.Wuxiaworld;
 import org.download.novels.service.http.centralnovel.CentralNovel;
 import org.download.novels.service.http.lightnovelbrasil.LightNovelBrasil;
@@ -27,7 +27,7 @@ public class WriterFactory {
     private final ReaperscansHttp reaperscans;
     private final NovelPubHttp novelPubHttp;
     private final Woopread woopread;
-    private final NeoxScans neoxScans;
+    private final NeoxScansHttp neoxScans;
     private final Koreanmtl koreanmtl;
     private final CentralNovel centralNovel;
     private final LightNovelBrasil lightNovelBrasil;
