@@ -39,7 +39,11 @@ public class NeoxScansHttp extends JsoupParse {
 
     @Override
     protected String getNextPage(Document document) {
-        return document.selectFirst("div.nav-next > a").attr("href");
+        var element = document.selectFirst("div.nav-next > a");
+        if (element != null) {
+            return element.attr("href");
+        }
+        return null;
     }
 
 
