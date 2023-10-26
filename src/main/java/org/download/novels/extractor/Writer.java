@@ -19,10 +19,7 @@ public abstract class Writer extends AbstractWriter {
     @Override
     public void execute(Novel novel, String url) {
         verifyChapter(novel);
-
-        Thread thread = new Thread(() -> doExecute(novel, url));
-        thread.setName(novel.getNovelName().trim().toLowerCase());
-        thread.start();
+        doExecute(novel, url);
     }
 
     private void doExecute(Novel novel, String url) {

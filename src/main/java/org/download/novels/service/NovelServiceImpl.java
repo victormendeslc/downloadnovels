@@ -49,7 +49,7 @@ public class NovelServiceImpl implements NovelService {
             var page = getStartPage(entity, novel);
             var extrator = factory.executeByType(novel.getType());
             if (extrator != null) {
-                extrator.execute(novel, page, StringUtils.hasText(entity.getProloguePage()));
+                extrator.executeFirst(novel, page, StringUtils.hasText(entity.getProloguePage()));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -12,24 +12,24 @@ public abstract class AbstractWriter implements IWriter {
 
     private final ChapterRepository chapterRepository;
 
-    protected Integer numberChapter = 0;
+    protected Integer numberChapter = 1;
 
     protected AbstractWriter(ChapterRepository chapterRepository) {
         this.chapterRepository = chapterRepository;
     }
 
     @Override
-    public void execute(Novel novel, String page, boolean prologue) {
+    public void executeFirst(Novel novel, String page, boolean prologue) {
         if (prologue) {
-            numberChapter = -1;
+            numberChapter = 0;
         }
         Thread thread = new Thread(() -> execute(novel, page));
-        thread.setName(novel.getNovelName().toLowerCase().trim().replace(" ",""));
+        thread.setName(novel.getNovelName().toLowerCase().trim().replace(" ", ""));
         thread.start();
     }
 
     protected void verifyChapter(Novel novel) {
-        if (!novel.getChapters().isEmpty() && numberChapter <= 0) {
+        if (!novel.getChapters().isEmpty() && numberChapter <= 1) {
             Optional<Chapter> lastElement = novel.lastChapter();
             lastElement.ifPresent(chapter -> numberChapter = chapter.getPage());
         }

@@ -21,7 +21,7 @@ public abstract class JsoupParse extends AbstractWriter {
     @Override
     public void execute(Novel novel, String url) {
         verifyChapter(novel);
-       retry(novel, url, true);
+        retry(novel, url, true);
     }
 
     private void retry(Novel novel, String url, boolean retry) {
@@ -41,8 +41,9 @@ public abstract class JsoupParse extends AbstractWriter {
             save(chapter);
 
             if (verifyNextPage(nextPage) && ObjectUtils.isNotEmpty(content)) {
-                execute(novel, nextPage);
+                retry(novel, nextPage, true);
             }
+            log.info("Finish {}", novel.getNovelName());
         } catch (IOException e) {
             e.printStackTrace();
             if (retry) {
