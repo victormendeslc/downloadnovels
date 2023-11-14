@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class LightNovelBrasil extends JsoupParse {
@@ -37,15 +38,17 @@ public class LightNovelBrasil extends JsoupParse {
     }
 
     @Override
-    protected Integer getNumberChapter(String nextPage) {
-        if(StringUtils.hasText(nextPage)) {
-            var pageNumberString = "-" + (numberChapter + 1);
+    protected AtomicInteger getNumberChapter(String nextPage) {
+        if (StringUtils.hasText(nextPage)) {
+            var pageNumberString = "-" + (numberChapter.incrementAndGet());
             if (nextPage.contains(pageNumberString)) {
                 return super.getNumberChapter(nextPage);
 
             }
             var page = Arrays.stream(nextPage.split("-")).reduce((first, second) -> second).map(str -> str.replace("/", "")).orElseThrow();
-            return Integer.valueOf(page);
+            var atomicInteger = new AtomicInteger(Integer.parseInt(page));
+            setNumberChapter(atomicInteger);
+            return atomicInteger;
         }
         return null;
     }
