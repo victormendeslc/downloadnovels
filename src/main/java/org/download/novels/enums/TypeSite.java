@@ -18,7 +18,8 @@ public enum TypeSite {
     LIGHTNOVELBRASIL("Light novel Brasil"),
     CENTRALNOVEL("Central Novel - PT-BR"),
     VULCAN("Vulcan - PT-BR"),
-    WUXIACITY("WuxiaCity");
+    WUXIACITY("WuxiaCity"),
+    WUXIAMTL("Wuxiamtl");
 
     private final String title;
 }

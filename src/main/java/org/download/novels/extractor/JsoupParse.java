@@ -48,6 +48,11 @@ public abstract class JsoupParse extends AbstractWriter {
         } catch (IOException e) {
             e.printStackTrace();
             if (retry) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 retry(novel, url, false);
             }
         }

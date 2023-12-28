@@ -15,6 +15,7 @@ import org.download.novels.service.http.skydemonorder.Koreanmtl;
 import org.download.novels.service.http.vulcan.Vulcan;
 import org.download.novels.service.http.woopread.Woopread;
 import org.download.novels.service.http.wuxiacity.WuxiaCity;
+import org.download.novels.service.http.wuxiamtl.Wuxiamtl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,6 +34,7 @@ public class WriterFactory {
     private final LightNovelBrasil lightNovelBrasil;
     private final WuxiaCity wuxiacity;
     private final Vulcan vulcan;
+    private final Wuxiamtl wuxiamtl;
 
 
     public IExtractor executeByType(TypeSite type) {
@@ -47,6 +49,7 @@ public class WriterFactory {
             case LIGHTNOVELBRASIL -> lightNovelBrasil;
             case WUXIACITY -> wuxiacity;
             case VULCAN -> vulcan;
+            case WUXIAMTL->wuxiamtl;
         };
     }
 }
